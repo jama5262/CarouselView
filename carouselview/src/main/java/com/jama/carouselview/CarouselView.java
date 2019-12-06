@@ -29,35 +29,37 @@ public class CarouselView extends FrameLayout {
     init(context);
   }
 
-  void init(Context context) {
+  private void init(Context context) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     this.viewPager2 = carouselView.findViewById(R.id.carouselViewPager2);
   }
 
-  void setSize(int size) {
+  public void setSize(int size) {
     this.size = size;
     this.isSizeSet = true;
   }
 
-  int getSize() {
+  public int getSize() {
     return this.size;
   }
 
-  void setResource(int resource) {
+  public void setResource(int resource) {
     this.resource = resource;
     this.isResourceSet = true;
   }
 
-  int getResource() {
+  public int getResource() {
     return this.resource;
   }
 
-  void show() {
+  public void show() {
     if (this.carouselViewListener == null) throw new RuntimeException("A carouselviewlistener is need");
     else if (!this.isResourceSet) throw new RuntimeException("A resource to a view is needed");
     else if (!this.isSizeSet) throw new RuntimeException("A size is needed");
     else  {
+      viewPager2.setAdapter(new CarouselViewAdapter(this.carouselViewListener, this.resource, this.size));
+      viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
     }
   }
 
