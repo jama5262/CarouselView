@@ -53,6 +53,10 @@ public class CarouselView extends FrameLayout {
     return this.resource;
   }
 
+  public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
+    this.carouselViewListener = carouselViewListener;
+  }
+
   public void show() {
     if (this.carouselViewListener == null) throw new RuntimeException("A carouselviewlistener is need");
     else if (!this.isResourceSet) throw new RuntimeException("A resource to a view is needed");
