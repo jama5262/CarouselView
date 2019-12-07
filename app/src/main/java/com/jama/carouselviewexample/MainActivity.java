@@ -1,7 +1,9 @@
 package com.jama.carouselviewexample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +15,7 @@ import com.jama.carouselview.CarouselViewListener;
 public class MainActivity extends AppCompatActivity {
 
   CarouselView carouselView;
-  String[] data = {"1", "2", "3"};
+  String[] data = {"#EF5350", "#EC407A", "#AB47BC", "#4CAF50", "#FFA726", "#78909C"};
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +28,10 @@ public class MainActivity extends AppCompatActivity {
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
+        CardView cardView = view.findViewById(R.id.cardView);
         TextView textView = view.findViewById(R.id.textView);
-        textView.setText(data[position]);
-        textView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Toast.makeText(MainActivity.this, "This is number " + data[position], Toast.LENGTH_SHORT).show();
-          }
-        });
+        cardView.setCardBackgroundColor(Color.parseColor(data[position]));
+        textView.setText((position + 1) + "");
       }
     });
     carouselView.show();
