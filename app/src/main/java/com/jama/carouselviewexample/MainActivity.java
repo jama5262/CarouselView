@@ -15,7 +15,7 @@ import com.jama.carouselview.CarouselViewListener;
 public class MainActivity extends AppCompatActivity {
 
   CarouselView carouselView;
-  String[] data = {"#EF5350", "#EC407A", "#AB47BC", "#4CAF50", "#FFA726", "#78909C"};
+  String[] data = {"#EF5350", "#EC407A", "#AB47BC", "#4CAF50", "#FFA726", "#78909C", "#FFA726"};
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +25,15 @@ public class MainActivity extends AppCompatActivity {
     carouselView = findViewById(R.id.carouselView);
     carouselView.setSize(data.length);
     carouselView.setResource(R.layout.item);
-    carouselView.setMargin(100);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
         CardView cardView = view.findViewById(R.id.cardView);
         TextView textView = view.findViewById(R.id.textView);
         cardView.setCardBackgroundColor(Color.parseColor(data[position]));
-        textView.setText((position + 1) + "");
+        textView.setText("00000");
       }
     });
     carouselView.show();
-
   }
 }

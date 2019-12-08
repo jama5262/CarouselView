@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="pageMargin">42dp</dimen>
+    <dimen name="viewpager_next_item_visible">15dp</dimen>
+    <dimen name="viewpager_current_item_horizontal_margin">70dp</dimen>
+
+</resources>

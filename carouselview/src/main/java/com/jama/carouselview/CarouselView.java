@@ -4,42 +4,74 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 public class CarouselView extends FrameLayout {
 
-  private ViewPager2 viewPager2;
-  private CompositePageTransformer compositePageTransformer;
+  private Context context;
+  RecyclerView carouselRecyclerView;
+  private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
   private int resource;
   private int size;
   private boolean isResourceSet = false;
   private boolean isSizeSet = false;
-  private int margin = 0;
 
   public CarouselView(@NonNull Context context) {
     super(context);
+    this.context = context;
     init(context);
   }
 
   public CarouselView(@NonNull Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
+    this.context = context;
     init(context);
   }
 
   private void init(Context context) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
-    this.viewPager2 = carouselView.findViewById(R.id.carouselViewPager2);
-    this.viewPager2.setOffscreenPageLimit(1);
-    this.viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-    this.compositePageTransformer = new CompositePageTransformer();
+    carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
+    Button button = carouselView.findViewById(R.id.button);
+    carouselRecyclerView.setHasFixedSize(false);
+    layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+    carouselRecyclerView.setLayoutManager(layoutManager);
+
+    final SnapHelper snapHelper = new PagerSnapHelper();
+    snapHelper.attachToRecyclerView(carouselRecyclerView);
+
+//    recyclerView.addItemDecoration(new CarouselItemDecoration(context, R.dimen.viewpager_current_item_horizontal_margin));
+//
+//    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//      @Override
+//      public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//        super.onScrollStateChanged(recyclerView, newState);
+//        View centerView = snapHelper.findSnapView(layoutManager);
+//        Button button = carouselView.findViewById(R.id.button2);
+//        int pos = layoutManager.getPosition(centerView);
+//        if (newState == RecyclerView.SCROLL_STATE_IDLE || (pos == 0 && newState == RecyclerView.SCROLL_STATE_DRAGGING)) {
+//          button.setText((pos + 1) + "");
+//        } else {
+//          button.setText((pos + 1) + "");
+//        }
+//
+//      }
+//
+//      @Override
+//      public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//        super.onScrolled(recyclerView, dx, dy);
+//        Log.e("jjj", dx+ "");
+//      }
+//    });
   }
 
   public void setSize(int size) {
@@ -60,17 +92,6 @@ public class CarouselView extends FrameLayout {
     return this.resource;
   }
 
-  public void setMargin(int margin) {
-    if (margin < 0) {
-      throw new IllegalArgumentException("Margin cannot be negative");
-    }
-    this.margin = margin;
-  }
-
-  public int getMargin() {
-    return this.margin;
-  }
-
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
     this.carouselViewListener = carouselViewListener;
   }
@@ -87,11 +108,7 @@ public class CarouselView extends FrameLayout {
 
   public void show() {
     this.validate();
-    this.viewPager2.setAdapter(new CarouselViewAdapter(this.getCarouselViewListener(), this.getResource(), this.getSize()));
-
-    this.compositePageTransformer.addTransformer(new MarginPageTransformer(getMargin()));
-
-    viewPager2.setPageTransformer(compositePageTransformer);
-  }
+    carouselRecyclerView.setAdapter(new CarouselViewAdapter(this.getCarouselViewListener(), this.getResource(), this.getSize()));
+      }
 
 }
