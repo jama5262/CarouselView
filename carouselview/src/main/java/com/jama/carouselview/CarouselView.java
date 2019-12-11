@@ -165,6 +165,14 @@ public class CarouselView extends FrameLayout {
     return this.pageIndicatorView.getUnselectedColor();
   }
 
+  public void setIndicatorRadius(int radius) {
+    this.pageIndicatorView.setRadius(radius);
+  }
+
+  public int getIndicatorRadius() {
+    return this.pageIndicatorView.getRadius();
+  }
+
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
     this.carouselViewListener = carouselViewListener;
   }

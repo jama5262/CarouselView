@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     carouselView.setResource(R.layout.item);
     carouselView.setIndicatorSelectedColor(Color.parseColor(data[5]));
     carouselView.setIndicatorUnselectedColor(Color.parseColor(data[0]));
+    carouselView.setIndicatorRadius(5);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
