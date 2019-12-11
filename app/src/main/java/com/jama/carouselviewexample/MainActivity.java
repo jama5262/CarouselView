@@ -5,15 +5,12 @@ import androidx.cardview.widget.CardView;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jama.carouselview.CarouselView;
 import com.jama.carouselview.CarouselViewListener;
+import com.jama.carouselview.enums.IndicatorAnimationType;
 
 import java.util.Random;
 
@@ -28,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     carouselView = findViewById(R.id.carouselView);
-    carouselView.setSize(5);
+    carouselView.setSize(10);
+    carouselView.setIndicatorAnimationType(IndicatorAnimationType.DROP);
     carouselView.setResource(R.layout.item);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override

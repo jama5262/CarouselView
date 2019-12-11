@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager.widget.ViewPager;
 
+import com.jama.carouselview.enums.IndicatorAnimationType;
 import com.rd.PageIndicatorView;
+import com.rd.animation.type.AnimationType;
 
 import static android.content.Context.WINDOW_SERVICE;
 
@@ -29,9 +31,11 @@ public class CarouselView extends FrameLayout {
   private Context context;
   private PageIndicatorView pageIndicatorView;
   private ViewPager viewPager;
-  RecyclerView carouselRecyclerView;
+  private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
+  private IndicatorAnimationType indicatorAnimationType;
+  private SnapHelper snapHelper;
   private int resource;
   private int size;
   private boolean isResourceSet = false;
@@ -52,24 +56,21 @@ public class CarouselView extends FrameLayout {
   private void init(final Context context) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
-    carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
+    this.carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
     this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
 
     carouselRecyclerView.setHasFixedSize(false);
-    layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-    carouselRecyclerView.setLayoutManager(layoutManager);
+    this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+    carouselRecyclerView.setLayoutManager(this.layoutManager);
 
-    pageIndicatorView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
-      }
-    });
+    snapHelper = new LinearSnapHelper();
+    snapHelper.attachToRecyclerView(this.carouselRecyclerView);
 
-    final SnapHelper snapHelper = new LinearSnapHelper();
-    snapHelper.attachToRecyclerView(carouselRecyclerView);
+    this.setScrollListener();
+  }
 
-    carouselRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+  private void setScrollListener() {
+    this.carouselRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override
       public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
@@ -82,14 +83,11 @@ public class CarouselView extends FrameLayout {
         }
       }
 
+      @Override
+      public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
+      }
     });
-  }
-
-  private int getScreenWidth() {
-    DisplayMetrics dm = new DisplayMetrics();
-    WindowManager windowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
-    windowManager.getDefaultDisplay().getMetrics(dm);
-    return Math.round(dm.widthPixels / dm.density);
   }
 
   public void setSize(int size) {
@@ -109,6 +107,45 @@ public class CarouselView extends FrameLayout {
 
   public int getResource() {
     return this.resource;
+  }
+
+  public void setIndicatorAnimationType(IndicatorAnimationType indicatorAnimationType) {
+    this.indicatorAnimationType = indicatorAnimationType;
+    switch (indicatorAnimationType) {
+      case DROP:
+        this.pageIndicatorView.setAnimationType(AnimationType.DROP);
+        break;
+      case FILL:
+        this.pageIndicatorView.setAnimationType(AnimationType.FILL);
+        break;
+      case NONE:
+        this.pageIndicatorView.setAnimationType(AnimationType.NONE);
+        break;
+      case SWAP:
+        this.pageIndicatorView.setAnimationType(AnimationType.SWAP);
+        break;
+      case WORM:
+        this.pageIndicatorView.setAnimationType(AnimationType.WORM);
+        break;
+      case COLOR:
+        this.pageIndicatorView.setAnimationType(AnimationType.COLOR);
+        break;
+      case SCALE:
+        this.pageIndicatorView.setAnimationType(AnimationType.SCALE);
+        break;
+      case SLIDE:
+        this.pageIndicatorView.setAnimationType(AnimationType.SLIDE);
+        break;
+      case THIN_WORM:
+        this.pageIndicatorView.setAnimationType(AnimationType.THIN_WORM);
+        break;
+      case SCALE_DOWN:
+        this.pageIndicatorView.setAnimationType(AnimationType.SCALE_DOWN);
+    }
+  }
+
+  public IndicatorAnimationType getIndicatorAnimationType() {
+    return this.indicatorAnimationType;
   }
 
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
