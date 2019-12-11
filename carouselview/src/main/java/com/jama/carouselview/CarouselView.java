@@ -15,15 +15,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+import androidx.viewpager.widget.ViewPager;
+
+import com.rd.PageIndicatorView;
 
 import static android.content.Context.WINDOW_SERVICE;
 
 public class CarouselView extends FrameLayout {
 
   private Context context;
-  private Button button;
+  private PageIndicatorView pageIndicatorView;
+  private ViewPager viewPager;
   RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
@@ -48,19 +53,20 @@ public class CarouselView extends FrameLayout {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
-    button = carouselView.findViewById(R.id.button);
+    this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
+
     carouselRecyclerView.setHasFixedSize(false);
     layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(layoutManager);
 
-    button.setOnClickListener(new OnClickListener() {
+    pageIndicatorView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
         Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
       }
     });
 
-    final SnapHelper snapHelper = new CarouselSnapHelper();
+    final SnapHelper snapHelper = new LinearSnapHelper();
     snapHelper.attachToRecyclerView(carouselRecyclerView);
 
     carouselRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -70,9 +76,9 @@ public class CarouselView extends FrameLayout {
         View centerView = snapHelper.findSnapView(layoutManager);
         int pos = layoutManager.getPosition(centerView);
         if (newState == RecyclerView.SCROLL_STATE_IDLE || (pos == 0 && newState == RecyclerView.SCROLL_STATE_DRAGGING)) {
-          button.setText((pos + 1) + "");
+          pageIndicatorView.setSelection(pos);
         } else {
-          button.setText((pos + 1) + "");
+          pageIndicatorView.setSelection(pos);
         }
       }
 
@@ -88,6 +94,7 @@ public class CarouselView extends FrameLayout {
 
   public void setSize(int size) {
     this.size = size;
+    this.pageIndicatorView.setCount(size);
     this.isSizeSet = true;
   }
 

@@ -37,17 +37,17 @@ public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapte
   public void onBindViewHolder(@NonNull CarouselAdapterViewHolder holder, int position) {
     carouselViewListener.setItemPosition(holder.itemView, position);
     final View v = holder.itemView;
-//    v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//      @Override
-//      public void onGlobalLayout() {
-//        Log.e("jjj", v.getWidth() + " " + v.getMeasuredWidth());
-//        if (recyclerView.getItemDecorationCount() > 0) {
-//          recyclerView.removeItemDecorationAt(0);
-//        }
-//        recyclerView.addItemDecoration(new CarouselItemDecoration(v.getWidth()), 0);
-//        v.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//      }
-//    });
+    v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+      @Override
+      public void onGlobalLayout() {
+        Log.e("jjj", v.getWidth() + " " + v.getMeasuredWidth());
+        if (recyclerView.getItemDecorationCount() > 0) {
+          recyclerView.removeItemDecorationAt(0);
+        }
+        recyclerView.addItemDecoration(new CarouselItemDecoration(v.getWidth()), 0);
+        v.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+      }
+    });
   }
 
   @Override

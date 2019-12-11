@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     carouselView = findViewById(R.id.carouselView);
-    carouselView.setSize(20);
+    carouselView.setSize(5);
     carouselView.setResource(R.layout.item);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override

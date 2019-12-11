@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:attrs="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -9,10 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/button"
+    <com.rd.PageIndicatorView
+        android:id="@+id/pageIndicatorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Indicator" />
+        android:layout_gravity="center_horizontal"
+        app:piv_animationType="scale"
+        app:piv_dynamicCount="true"
+        app:piv_interactiveAnimation="true"
+        app:piv_selectedColor="@android:color/black"
+        app:piv_unselectedColor="@android:color/holo_red_dark"
+        attrs:piv_padding="12dp"
+        attrs:piv_radius="8dp" />
 
 </LinearLayout>
