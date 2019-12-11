@@ -173,6 +173,14 @@ public class CarouselView extends FrameLayout {
     return this.pageIndicatorView.getRadius();
   }
 
+  public void setIndicatorPadding(int padding) {
+    this.pageIndicatorView.setPadding(padding);
+  }
+
+  public int getIndicatorPadding() {
+    return this.pageIndicatorView.getPadding();
+  }
+
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
     this.carouselViewListener = carouselViewListener;
   }

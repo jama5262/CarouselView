@@ -23,6 +23,6 @@
         app:piv_selectedColor="@color/selected"
         app:piv_unselectedColor="@color/unselected"
         attrs:piv_padding="12dp"
-        attrs:piv_radius="8dp" />
+        attrs:piv_radius="5dp" />
 
 </LinearLayout>
