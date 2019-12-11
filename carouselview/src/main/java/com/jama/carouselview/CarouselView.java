@@ -64,7 +64,7 @@ public class CarouselView extends FrameLayout {
     });
 
     final SnapHelper snapHelper = new LinearSnapHelper();
-//    snapHelper.attachToRecyclerView(carouselRecyclerView);
+    snapHelper.attachToRecyclerView(carouselRecyclerView);
 
             carouselRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override
