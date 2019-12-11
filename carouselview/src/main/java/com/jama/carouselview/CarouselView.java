@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -148,6 +149,22 @@ public class CarouselView extends FrameLayout {
     return this.indicatorAnimationType;
   }
 
+  public void setIndicatorSelectedColor(int color) {
+    this.pageIndicatorView.setSelectedColor(color);
+  }
+
+  public int getIndicatorSelectedColor() {
+    return this.pageIndicatorView.getSelectedColor();
+  }
+
+  public void setIndicatorUnselectedColor(int color) {
+    this.pageIndicatorView.setUnselectedColor(color);
+  }
+
+  public int getIndicatorUnselectedColor() {
+    return this.pageIndicatorView.getUnselectedColor();
+  }
+
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
     this.carouselViewListener = carouselViewListener;
   }
@@ -165,9 +182,6 @@ public class CarouselView extends FrameLayout {
   public void show() {
     this.validate();
     carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView));
-
-//    carouselRecyclerView.addItemDecoration(new CarouselItemDecoration(layoutManager, context, getResource()));
-
   }
 
 }
