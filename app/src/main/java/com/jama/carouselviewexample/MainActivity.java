@@ -5,12 +5,17 @@ import androidx.cardview.widget.CardView;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jama.carouselview.CarouselView;
 import com.jama.carouselview.CarouselViewListener;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     carouselView = findViewById(R.id.carouselView);
-    carouselView.setSize(data.length);
+    carouselView.setSize(20);
     carouselView.setResource(R.layout.item);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
         CardView cardView = view.findViewById(R.id.cardView);
         TextView textView = view.findViewById(R.id.textView);
-        cardView.setCardBackgroundColor(Color.parseColor(data[position]));
-        textView.setText("00000");
+        cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
+        textView.setText((position + 1 + ""));
       }
     });
     carouselView.show();

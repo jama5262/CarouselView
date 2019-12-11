@@ -2,21 +2,31 @@ package com.jama.carouselview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+import androidx.viewpager2.widget.MarginPageTransformer;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 public class CarouselView extends FrameLayout {
 
   private Context context;
+  private Button button;
   RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
@@ -37,41 +47,46 @@ public class CarouselView extends FrameLayout {
     init(context);
   }
 
-  private void init(Context context) {
+  private void init(final Context context) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
-    Button button = carouselView.findViewById(R.id.button);
+    button = carouselView.findViewById(R.id.button);
     carouselRecyclerView.setHasFixedSize(false);
     layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(layoutManager);
 
-    final SnapHelper snapHelper = new PagerSnapHelper();
-    snapHelper.attachToRecyclerView(carouselRecyclerView);
+    button.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
+      }
+    });
 
-//    recyclerView.addItemDecoration(new CarouselItemDecoration(context, R.dimen.viewpager_current_item_horizontal_margin));
-//
-//    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//      @Override
-//      public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//        super.onScrollStateChanged(recyclerView, newState);
-//        View centerView = snapHelper.findSnapView(layoutManager);
-//        Button button = carouselView.findViewById(R.id.button2);
-//        int pos = layoutManager.getPosition(centerView);
-//        if (newState == RecyclerView.SCROLL_STATE_IDLE || (pos == 0 && newState == RecyclerView.SCROLL_STATE_DRAGGING)) {
-//          button.setText((pos + 1) + "");
-//        } else {
-//          button.setText((pos + 1) + "");
-//        }
-//
-//      }
-//
-//      @Override
-//      public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//        super.onScrolled(recyclerView, dx, dy);
-//        Log.e("jjj", dx+ "");
-//      }
-//    });
+    final SnapHelper snapHelper = new LinearSnapHelper();
+//    snapHelper.attachToRecyclerView(carouselRecyclerView);
+
+            carouselRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override
+      public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+        super.onScrollStateChanged(recyclerView, newState);
+        View centerView = snapHelper.findSnapView(layoutManager);
+        int pos = layoutManager.getPosition(centerView);
+        if (newState == RecyclerView.SCROLL_STATE_IDLE || (pos == 0 && newState == RecyclerView.SCROLL_STATE_DRAGGING)) {
+          button.setText((pos + 1) + "");
+        } else {
+          button.setText((pos + 1) + "");
+        }
+      }
+
+    });
+  }
+
+  private int getScreenWidth() {
+    DisplayMetrics dm = new DisplayMetrics();
+    WindowManager windowManager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
+    windowManager.getDefaultDisplay().getMetrics(dm);
+    return Math.round(dm.widthPixels / dm.density);
   }
 
   public void setSize(int size) {
@@ -108,7 +123,10 @@ public class CarouselView extends FrameLayout {
 
   public void show() {
     this.validate();
-    carouselRecyclerView.setAdapter(new CarouselViewAdapter(this.getCarouselViewListener(), this.getResource(), this.getSize()));
-      }
+    carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView));
+
+//    carouselRecyclerView.addItemDecoration(new CarouselItemDecoration(layoutManager, context, getResource()));
+
+  }
 
 }
