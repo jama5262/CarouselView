@@ -68,6 +68,7 @@ public class CarouselView extends FrameLayout {
     snapHelper.attachToRecyclerView(this.carouselRecyclerView);
 
     this.setScrollListener();
+    this.hiddedIndicator(false);
   }
 
   private void setScrollListener() {
@@ -179,6 +180,14 @@ public class CarouselView extends FrameLayout {
 
   public int getIndicatorPadding() {
     return this.pageIndicatorView.getPadding();
+  }
+
+  public void hiddedIndicator(boolean hide) {
+    if (hide) {
+      this.pageIndicatorView.setVisibility(GONE);
+    } else {
+      this.pageIndicatorView.setVisibility(VISIBLE);
+    }
   }
 
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {

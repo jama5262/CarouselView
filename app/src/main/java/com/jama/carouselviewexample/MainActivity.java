@@ -17,6 +17,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
   CarouselView carouselView;
+  CarouselView carouselView2;
   String[] data = {"#EF5350", "#EC407A", "#AB47BC", "#4CAF50", "#FFA726", "#78909C", "#FFA726"};
 
   @Override
@@ -42,5 +43,25 @@ public class MainActivity extends AppCompatActivity {
       }
     });
     carouselView.show();
+
+    carouselView2 = findViewById(R.id.carouselView2);
+    carouselView2.setSize(3);
+    carouselView2.setIndicatorAnimationType(IndicatorAnimationType.SWAP);
+    carouselView2.setResource(R.layout.item);
+    carouselView2.setIndicatorSelectedColor(Color.parseColor(data[5]));
+    carouselView2.setIndicatorUnselectedColor(Color.parseColor(data[0]));
+    carouselView2.setIndicatorRadius(5);
+    carouselView2.setIndicatorPadding(5);
+    carouselView2.hiddedIndicator(true);
+    carouselView2.setCarouselViewListener(new CarouselViewListener() {
+      @Override
+      public void setItemPosition(View view, final int position) {
+        CardView cardView = view.findViewById(R.id.cardView);
+        TextView textView = view.findViewById(R.id.textView);
+        cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
+        textView.setText((position + 1 + ""));
+      }
+    });
+    carouselView2.show();
   }
 }
