@@ -31,7 +31,6 @@ import static android.content.Context.WINDOW_SERVICE;
 
 public class CarouselView extends FrameLayout {
 
-  private Context context;
   private PageIndicatorView pageIndicatorView;
   private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
@@ -47,13 +46,11 @@ public class CarouselView extends FrameLayout {
 
   public CarouselView(@NonNull Context context) {
     super(context);
-    this.context = context;
     init(context);
   }
 
   public CarouselView(@NonNull Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
-    this.context = context;
     init(context);
   }
 
