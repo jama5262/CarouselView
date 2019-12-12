@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     carouselView2.setIndicatorRadius(5);
     carouselView2.setIndicatorPadding(5);
     carouselView2.hideIndicator(true);
+    carouselView2.enableSnapping(false);
     carouselView2.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {

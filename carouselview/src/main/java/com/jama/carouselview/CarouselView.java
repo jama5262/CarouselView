@@ -39,6 +39,7 @@ public class CarouselView extends FrameLayout {
   private IndicatorAnimationType indicatorAnimationType;
   private OffsetType offsetType;
   private SnapHelper snapHelper;
+  private boolean enableSnapping = true;
   private int resource;
   private int size;
   private boolean isResourceSet = false;
@@ -70,9 +71,15 @@ public class CarouselView extends FrameLayout {
     this.hideIndicator(false);
   }
 
+  public void enableSnapping(boolean enable) {
+    this.enableSnapping = enable;
+  }
+
   private void setAdapter() {
     this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getOffsetType() == OffsetType.CENTER));
-    this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
+    if (this.enableSnapping) {
+      this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
+    }
     this.setScrollListener();
   }
 
