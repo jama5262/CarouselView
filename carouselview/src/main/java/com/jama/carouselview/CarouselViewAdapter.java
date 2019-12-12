@@ -10,7 +10,7 @@ import android.view.ViewTreeObserver;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.xmlpull.v1.XmlPullParser;
+import com.jama.carouselview.enums.OffsetType;
 
 public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapter.CarouselAdapterViewHolder> {
 
@@ -18,12 +18,16 @@ public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapte
   private int resource;
   private int size;
   private RecyclerView recyclerView;
+  private CarouselOffset carouselOffset;
+  private boolean isOffsetStart;
 
-  public CarouselViewAdapter(CarouselViewListener carouselViewListener, int resource, int size, RecyclerView recyclerView) {
+  public CarouselViewAdapter(CarouselViewListener carouselViewListener, int resource, int size, RecyclerView recyclerView, boolean isOffsetStart) {
     this.carouselViewListener = carouselViewListener;
     this.resource = resource;
     this.size = size;
     this.recyclerView = recyclerView;
+    this.isOffsetStart = isOffsetStart;
+    this.carouselOffset = new CarouselOffset();
   }
 
   @NonNull
@@ -35,19 +39,10 @@ public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapte
 
   @Override
   public void onBindViewHolder(@NonNull CarouselAdapterViewHolder holder, int position) {
-    carouselViewListener.setItemPosition(holder.itemView, position);
-    final View v = holder.itemView;
-    v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-      @Override
-      public void onGlobalLayout() {
-        Log.e("jjj", v.getWidth() + " " + v.getMeasuredWidth());
-        if (recyclerView.getItemDecorationCount() > 0) {
-          recyclerView.removeItemDecorationAt(0);
-        }
-        recyclerView.addItemDecoration(new CarouselItemDecoration(v.getWidth()), 0);
-        v.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-      }
-    });
+    this.carouselViewListener.setItemPosition(holder.itemView, position);
+    if (this.isOffsetStart) {
+      this.carouselOffset.init(recyclerView, holder.itemView);
+    }
   }
 
   @Override

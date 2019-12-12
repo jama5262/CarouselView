@@ -17,11 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager.widget.ViewPager;
 
 import com.jama.carouselview.enums.IndicatorAnimationType;
+import com.jama.carouselview.enums.OffsetType;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -29,14 +31,14 @@ import static android.content.Context.WINDOW_SERVICE;
 
 public class CarouselView extends FrameLayout {
 
-  private Context context;
   private PageIndicatorView pageIndicatorView;
-  private ViewPager viewPager;
   private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
   private IndicatorAnimationType indicatorAnimationType;
+  private OffsetType offsetType;
   private SnapHelper snapHelper;
+  private boolean enableSnapping = true;
   private int resource;
   private int size;
   private boolean isResourceSet = false;
@@ -44,13 +46,11 @@ public class CarouselView extends FrameLayout {
 
   public CarouselView(@NonNull Context context) {
     super(context);
-    this.context = context;
     init(context);
   }
 
   public CarouselView(@NonNull Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
-    this.context = context;
     init(context);
   }
 
@@ -64,11 +64,20 @@ public class CarouselView extends FrameLayout {
     this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
 
-    snapHelper = new LinearSnapHelper();
-    snapHelper.attachToRecyclerView(this.carouselRecyclerView);
+    this.setCarouselOffset(OffsetType.START);
+    this.hideIndicator(false);
+  }
 
+  public void enableSnapping(boolean enable) {
+    this.enableSnapping = enable;
+  }
+
+  private void setAdapter() {
+    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getOffsetType() == OffsetType.CENTER));
+    if (this.enableSnapping) {
+      this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
+    }
     this.setScrollListener();
-    this.hiddedIndicator(false);
   }
 
   private void setScrollListener() {
@@ -182,12 +191,28 @@ public class CarouselView extends FrameLayout {
     return this.pageIndicatorView.getPadding();
   }
 
-  public void hiddedIndicator(boolean hide) {
+  public void hideIndicator(boolean hide) {
     if (hide) {
       this.pageIndicatorView.setVisibility(GONE);
     } else {
       this.pageIndicatorView.setVisibility(VISIBLE);
     }
+  }
+
+  public void setCarouselOffset(OffsetType offsetType) {
+    this.offsetType = offsetType;
+    switch (offsetType) {
+      case CENTER:
+        this.snapHelper = new LinearSnapHelper();
+        break;
+      case START:
+        this.snapHelper = new CarouselSnapHelper();
+        break;
+    }
+  }
+
+  public OffsetType getOffsetType() {
+    return this.offsetType;
   }
 
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
@@ -206,7 +231,9 @@ public class CarouselView extends FrameLayout {
 
   public void show() {
     this.validate();
-    carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView));
+    this.setAdapter();
+
+    Log.e("jjj", snapHelper.toString());
   }
 
 }

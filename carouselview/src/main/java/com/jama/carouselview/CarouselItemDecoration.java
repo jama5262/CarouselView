@@ -2,7 +2,6 @@ package com.jama.carouselview;
 
 import android.graphics.Rect;
 import android.view.View;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
