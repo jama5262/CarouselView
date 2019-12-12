@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     carouselView = findViewById(R.id.carouselView);
     carouselView.setSize(5);
-    carouselView.setIndicatorAnimationType(IndicatorAnimationType.SWAP);
+    carouselView.setIndicatorAnimationType(IndicatorAnimationType.FILL);
     carouselView.setResource(R.layout.item);
     carouselView.setIndicatorSelectedColor(Color.parseColor(data[5]));
     carouselView.setIndicatorUnselectedColor(Color.parseColor(data[0]));
