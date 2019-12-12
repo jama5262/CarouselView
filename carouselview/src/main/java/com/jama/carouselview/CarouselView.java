@@ -2,32 +2,21 @@ package com.jama.carouselview;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-import androidx.viewpager.widget.ViewPager;
 
 import com.jama.carouselview.enums.IndicatorAnimationType;
 import com.jama.carouselview.enums.OffsetType;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
-
-import static android.content.Context.WINDOW_SERVICE;
 
 public class CarouselView extends FrameLayout {
 
@@ -41,6 +30,7 @@ public class CarouselView extends FrameLayout {
   private boolean enableSnapping = true;
   private int resource;
   private int size;
+  private int spacing = 25;
   private boolean isResourceSet = false;
   private boolean isSizeSet = false;
 
@@ -73,7 +63,7 @@ public class CarouselView extends FrameLayout {
   }
 
   private void setAdapter() {
-    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getOffsetType() == OffsetType.CENTER));
+    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getOffsetType() == OffsetType.CENTER));
     if (this.enableSnapping) {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
     }
@@ -109,6 +99,14 @@ public class CarouselView extends FrameLayout {
 
   public int getSize() {
     return this.size;
+  }
+
+  public void setSpacing(int spacing) {
+    this.spacing = spacing;
+  }
+
+  public int getSpacing() {
+    return this.spacing;
   }
 
   public void setResource(int resource) {
@@ -232,8 +230,6 @@ public class CarouselView extends FrameLayout {
   public void show() {
     this.validate();
     this.setAdapter();
-
-    Log.e("jjj", snapHelper.toString());
   }
 
 }
