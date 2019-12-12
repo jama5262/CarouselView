@@ -1,16 +1,10 @@
 package com.jama.carouselview;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.jama.carouselview.enums.OffsetType;
 
 public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapter.CarouselAdapterViewHolder> {
 
@@ -21,7 +15,7 @@ public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapte
   private CarouselOffset carouselOffset;
   private boolean isOffsetStart;
 
-  public CarouselViewAdapter(CarouselViewListener carouselViewListener, int resource, int size, RecyclerView recyclerView, boolean isOffsetStart) {
+  CarouselViewAdapter(CarouselViewListener carouselViewListener, int resource, int size, RecyclerView recyclerView, boolean isOffsetStart) {
     this.carouselViewListener = carouselViewListener;
     this.resource = resource;
     this.size = size;

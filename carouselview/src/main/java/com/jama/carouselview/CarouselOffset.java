@@ -5,9 +5,9 @@ import android.view.ViewTreeObserver;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CarouselOffset {
+class CarouselOffset {
 
-  public void init(final RecyclerView recyclerView, final View view) {
+  void init(final RecyclerView recyclerView, final View view) {
     view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override
       public void onGlobalLayout() {

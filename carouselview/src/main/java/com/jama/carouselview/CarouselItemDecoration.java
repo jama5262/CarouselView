@@ -9,7 +9,7 @@ public class CarouselItemDecoration extends RecyclerView.ItemDecoration {
 
   private int width;
 
-  public CarouselItemDecoration(int width) {
+  CarouselItemDecoration(int width) {
     this.width = width;
   }
 
