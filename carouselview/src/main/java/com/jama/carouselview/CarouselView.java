@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager.widget.ViewPager;
 
 import com.jama.carouselview.enums.IndicatorAnimationType;
+import com.jama.carouselview.enums.OffsetType;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -32,11 +33,11 @@ public class CarouselView extends FrameLayout {
 
   private Context context;
   private PageIndicatorView pageIndicatorView;
-  private ViewPager viewPager;
   private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
   private IndicatorAnimationType indicatorAnimationType;
+  private OffsetType offsetType;
   private SnapHelper snapHelper;
   private int resource;
   private int size;
@@ -65,11 +66,14 @@ public class CarouselView extends FrameLayout {
     this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
 
-    snapHelper = new CarouselSnapHelper();
-    snapHelper.attachToRecyclerView(this.carouselRecyclerView);
+    this.setCarouselOffset(OffsetType.START);
+    this.hideIndicator(false);
+  }
 
+  private void setAdapter() {
+    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getOffsetType() == OffsetType.CENTER));
+    this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
     this.setScrollListener();
-    this.hiddedIndicator(false);
   }
 
   private void setScrollListener() {
@@ -183,12 +187,28 @@ public class CarouselView extends FrameLayout {
     return this.pageIndicatorView.getPadding();
   }
 
-  public void hiddedIndicator(boolean hide) {
+  public void hideIndicator(boolean hide) {
     if (hide) {
       this.pageIndicatorView.setVisibility(GONE);
     } else {
       this.pageIndicatorView.setVisibility(VISIBLE);
     }
+  }
+
+  public void setCarouselOffset(OffsetType offsetType) {
+    this.offsetType = offsetType;
+    switch (offsetType) {
+      case CENTER:
+        this.snapHelper = new LinearSnapHelper();
+        break;
+      case START:
+        this.snapHelper = new CarouselSnapHelper();
+        break;
+    }
+  }
+
+  public OffsetType getOffsetType() {
+    return this.offsetType;
   }
 
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
@@ -207,7 +227,9 @@ public class CarouselView extends FrameLayout {
 
   public void show() {
     this.validate();
-    carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView));
+    this.setAdapter();
+
+    Log.e("jjj", snapHelper.toString());
   }
 
 }

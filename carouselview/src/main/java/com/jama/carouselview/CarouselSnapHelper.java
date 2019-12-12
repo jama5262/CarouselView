@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CarouselSnapHelper extends PagerSnapHelper {
+public class CarouselSnapHelper extends LinearSnapHelper {
 
   private Context context;
   private int MAX_SCROLL_ON_FLING_DURATION_MS = 1000;
