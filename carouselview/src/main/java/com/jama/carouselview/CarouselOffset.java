@@ -7,14 +7,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 class CarouselOffset {
 
-  void init(final RecyclerView recyclerView, final View view) {
+  void init(final RecyclerView recyclerView, final View view, final int margin, final boolean isOffsetStart) {
     view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override
       public void onGlobalLayout() {
         if (recyclerView.getItemDecorationCount() > 0) {
           recyclerView.removeItemDecorationAt(0);
         }
-        recyclerView.addItemDecoration(new CarouselItemDecoration(view.getWidth()), 0);
+        if (isOffsetStart) {
+          recyclerView.addItemDecoration(new CarouselItemDecoration(view.getWidth(), margin), 0);
+        } else {
+          recyclerView.addItemDecoration(new CarouselItemDecoration(0, margin), 0);
+        }
         view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
       }
     });
