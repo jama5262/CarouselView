@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager.widget.ViewPager;
@@ -64,7 +65,7 @@ public class CarouselView extends FrameLayout {
     this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
 
-    snapHelper = new LinearSnapHelper();
+    snapHelper = new CarouselSnapHelper();
     snapHelper.attachToRecyclerView(this.carouselRecyclerView);
 
     this.setScrollListener();
