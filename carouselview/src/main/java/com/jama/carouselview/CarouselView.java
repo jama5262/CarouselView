@@ -68,6 +68,14 @@ public class CarouselView extends FrameLayout {
     this.enableSnapping = enable;
   }
 
+  public void hideIndicator(boolean hide) {
+    if (hide) {
+      this.pageIndicatorView.setVisibility(GONE);
+    } else {
+      this.pageIndicatorView.setVisibility(VISIBLE);
+    }
+  }
+
   private void setAdapter() {
     this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getOffsetType() == OffsetType.CENTER));
     if (this.enableSnapping) {
@@ -97,31 +105,20 @@ public class CarouselView extends FrameLayout {
     });
   }
 
-  public void setSize(int size) {
-    this.size = size;
-    this.pageIndicatorView.setCount(size);
-    this.isSizeSet = true;
+  public void setCarouselOffset(OffsetType offsetType) {
+    this.offsetType = offsetType;
+    switch (offsetType) {
+      case CENTER:
+        this.snapHelper = new LinearSnapHelper();
+        break;
+      case START:
+        this.snapHelper = new CarouselSnapHelper();
+        break;
+    }
   }
 
-  public int getSize() {
-    return this.size;
-  }
-
-  public void setSpacing(int spacing) {
-    this.spacing = spacing;
-  }
-
-  public int getSpacing() {
-    return this.spacing;
-  }
-
-  public void setResource(int resource) {
-    this.resource = resource;
-    this.isResourceSet = true;
-  }
-
-  public int getResource() {
-    return this.resource;
+  public OffsetType getOffsetType() {
+    return this.offsetType;
   }
 
   public void setIndicatorAnimationType(IndicatorAnimationType indicatorAnimationType) {
@@ -163,22 +160,6 @@ public class CarouselView extends FrameLayout {
     return this.indicatorAnimationType;
   }
 
-  public void setIndicatorSelectedColor(int color) {
-    this.pageIndicatorView.setSelectedColor(color);
-  }
-
-  public int getIndicatorSelectedColor() {
-    return this.pageIndicatorView.getSelectedColor();
-  }
-
-  public void setIndicatorUnselectedColor(int color) {
-    this.pageIndicatorView.setUnselectedColor(color);
-  }
-
-  public int getIndicatorUnselectedColor() {
-    return this.pageIndicatorView.getUnselectedColor();
-  }
-
   public void setIndicatorRadius(int radius) {
     this.pageIndicatorView.setRadius(radius);
   }
@@ -195,28 +176,47 @@ public class CarouselView extends FrameLayout {
     return this.pageIndicatorView.getPadding();
   }
 
-  public void hideIndicator(boolean hide) {
-    if (hide) {
-      this.pageIndicatorView.setVisibility(GONE);
-    } else {
-      this.pageIndicatorView.setVisibility(VISIBLE);
-    }
+  public void setIndicatorSelectedColor(int color) {
+    this.pageIndicatorView.setSelectedColor(color);
   }
 
-  public void setCarouselOffset(OffsetType offsetType) {
-    this.offsetType = offsetType;
-    switch (offsetType) {
-      case CENTER:
-        this.snapHelper = new LinearSnapHelper();
-        break;
-      case START:
-        this.snapHelper = new CarouselSnapHelper();
-        break;
-    }
+  public int getIndicatorSelectedColor() {
+    return this.pageIndicatorView.getSelectedColor();
   }
 
-  public OffsetType getOffsetType() {
-    return this.offsetType;
+  public void setIndicatorUnselectedColor(int color) {
+    this.pageIndicatorView.setUnselectedColor(color);
+  }
+
+  public int getIndicatorUnselectedColor() {
+    return this.pageIndicatorView.getUnselectedColor();
+  }
+
+  public void setSize(int size) {
+    this.size = size;
+    this.pageIndicatorView.setCount(size);
+    this.isSizeSet = true;
+  }
+
+  public int getSize() {
+    return this.size;
+  }
+
+  public void setSpacing(int spacing) {
+    this.spacing = spacing;
+  }
+
+  public int getSpacing() {
+    return this.spacing;
+  }
+
+  public void setResource(int resource) {
+    this.resource = resource;
+    this.isResourceSet = true;
+  }
+
+  public int getResource() {
+    return this.resource;
   }
 
   public void setCarouselViewListener(CarouselViewListener carouselViewListener) {
