@@ -22,6 +22,7 @@ import com.rd.animation.type.AnimationType;
 
 public class CarouselView extends FrameLayout {
 
+  private Context context;
   private PageIndicatorView pageIndicatorView;
   private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
@@ -29,24 +30,26 @@ public class CarouselView extends FrameLayout {
   private IndicatorAnimationType indicatorAnimationType;
   private OffsetType offsetType;
   private SnapHelper snapHelper;
-  private boolean enableSnapping = true;
+  private boolean enableSnapping;
   private int resource;
   private int size;
-  private int spacing = 0;
+  private int spacing;
   private boolean isResourceSet = false;
   private boolean isSizeSet = false;
 
   public CarouselView(@NonNull Context context) {
     super(context);
-    init(context, null);
+    this.context = context;
+    init(null);
   }
 
   public CarouselView(@NonNull Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
-    init(context, attrs);
+    this.context = context;
+    init(attrs);
   }
 
-  private void init(final Context context, AttributeSet attributeSet) {
+  private void init(AttributeSet attributeSet) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     this.carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
@@ -55,11 +58,19 @@ public class CarouselView extends FrameLayout {
     carouselRecyclerView.setHasFixedSize(false);
     this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
+    this.initializeAttributes(attributeSet);
+  }
 
+  private void initializeAttributes(AttributeSet attributeSet) {
     if (attributeSet != null) {
-      TypedArray attributes = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
+      TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
+      this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
+      this.hideIndicator(attributes.getBoolean(R.styleable.CarouselView_hideIndicator, false));
+      this.setIndicatorRadius(attributes.getInteger(R.styleable.CarouselView_indicatorRadius, 5));
+      this.setIndicatorPadding(attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5));
+      this.setSize(attributes.getInteger(R.styleable.CarouselView_size, 0));
       this.setCarouselOffset(OffsetType.START);
-      this.setSpacing(attributes.getInteger(R.styleable.CarouselView_spacing, 100));
+      this.setSpacing(attributes.getInteger(R.styleable.CarouselView_spacing, 0));
       this.hideIndicator(false);
     }
   }
