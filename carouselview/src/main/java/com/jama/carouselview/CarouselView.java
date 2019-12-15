@@ -32,6 +32,9 @@ public class CarouselView extends FrameLayout {
   private SnapHelper snapHelper;
   private boolean enableSnapping;
   private int resource;
+  private int resourceId;
+  private int indicatorSelectedColorResourceId;
+  private int indicatorUnselectedColorResourceId;
   private int size;
   private int spacing;
   private boolean isResourceSet = false;
@@ -58,6 +61,7 @@ public class CarouselView extends FrameLayout {
     carouselRecyclerView.setHasFixedSize(false);
     this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
+
     this.initializeAttributes(attributeSet);
   }
 
@@ -65,13 +69,25 @@ public class CarouselView extends FrameLayout {
     if (attributeSet != null) {
       TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
       this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
-      this.hideIndicator(attributes.getBoolean(R.styleable.CarouselView_hideIndicator, false));
+      this.setCarouselOffset(this.getOffset(attributes.getInteger(R.styleable.CarouselView_carouselOffset, 0)));
+      this.resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
+      if (this.resourceId != 0) {
+        this.setResource(this.resourceId);
+      }
+      this.indicatorSelectedColorResourceId = attributes.getColor(R.styleable.CarouselView_indicatorSelectedColor, 0);
+      this.indicatorUnselectedColorResourceId = attributes.getColor(R.styleable.CarouselView_indicatorUnselectedColor, 0);
+      if (this.indicatorSelectedColorResourceId != 0) {
+        this.setIndicatorSelectedColor(this.indicatorSelectedColorResourceId);
+      }
+      if (this.indicatorUnselectedColorResourceId != 0) {
+        this.setIndicatorUnselectedColor(this.indicatorUnselectedColorResourceId);
+      }
+      this.setIndicatorAnimationType(this.getAnimation(attributes.getInteger(R.styleable.CarouselView_indicatorAnimationType, 0)));
       this.setIndicatorRadius(attributes.getInteger(R.styleable.CarouselView_indicatorRadius, 5));
       this.setIndicatorPadding(attributes.getInteger(R.styleable.CarouselView_indicatorPadding, 5));
       this.setSize(attributes.getInteger(R.styleable.CarouselView_size, 0));
-      this.setCarouselOffset(OffsetType.START);
       this.setSpacing(attributes.getInteger(R.styleable.CarouselView_spacing, 0));
-      this.hideIndicator(false);
+      attributes.recycle();
     }
   }
 
@@ -242,6 +258,56 @@ public class CarouselView extends FrameLayout {
     if (this.carouselViewListener == null) throw new RuntimeException("A carouselviewlistener is need");
     else if (!this.isResourceSet) throw new RuntimeException("A resource to a view is needed");
     else if (!this.isSizeSet) throw new RuntimeException("A size is needed");
+  }
+
+  private IndicatorAnimationType getAnimation(int value) {
+    IndicatorAnimationType animationType;
+    switch (value) {
+      case 1:
+        animationType = IndicatorAnimationType.FILL;
+        break;
+      case 2:
+        animationType = IndicatorAnimationType.DROP;
+        break;
+      case 3:
+        animationType = IndicatorAnimationType.SWAP;
+        break;
+      case 4:
+        animationType = IndicatorAnimationType.WORM;
+        break;
+      case 5:
+        animationType = IndicatorAnimationType.COLOR;
+        break;
+      case 6:
+        animationType = IndicatorAnimationType.SCALE;
+        break;
+      case 7:
+        animationType = IndicatorAnimationType.SLIDE;
+        break;
+      case 8:
+        animationType = IndicatorAnimationType.THIN_WORM;
+        break;
+      case 9:
+        animationType = IndicatorAnimationType.SCALE_DOWN;
+        break;
+      case 0:
+      default:
+        animationType = IndicatorAnimationType.NONE;
+    }
+    return animationType;
+  }
+
+  private OffsetType getOffset(int value) {
+    OffsetType offset;
+    switch (value) {
+      case 1:
+        offset = OffsetType.CENTER;
+        break;
+      case 0:
+      default:
+        offset = OffsetType.START;
+    }
+    return offset;
   }
 
   public void show() {

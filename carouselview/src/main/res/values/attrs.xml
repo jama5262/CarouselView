@@ -4,7 +4,6 @@
     <declare-styleable name="CarouselView">
 
         <attr name="enableSnapping" format="boolean" />
-        <attr name="hideIndicator" format="boolean" />
         <attr name="carouselOffset" format="enum">
             <enum name="start" value="0"/>
             <enum name="center" value="1"/>

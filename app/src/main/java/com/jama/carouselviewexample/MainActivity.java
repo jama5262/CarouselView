@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     carouselView = findViewById(R.id.carouselView);
-    carouselView.setSize(10);
-    carouselView.setResource(R.layout.item);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
@@ -44,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     carouselView2 = findViewById(R.id.carouselView2);
     carouselView2.setSize(10);
     carouselView2.setResource(R.layout.item);
+//    carouselView2.hideIndicator(true);
     carouselView2.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
