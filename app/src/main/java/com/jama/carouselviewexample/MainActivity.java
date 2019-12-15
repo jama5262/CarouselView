@@ -28,15 +28,6 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     carouselView = findViewById(R.id.carouselView);
-    carouselView.setSize(10);
-    carouselView.setIndicatorAnimationType(IndicatorAnimationType.FILL);
-    carouselView.setResource(R.layout.item);
-    carouselView.setIndicatorSelectedColor(Color.parseColor(data[5]));
-    carouselView.setIndicatorUnselectedColor(Color.parseColor(data[0]));
-    carouselView.setIndicatorRadius(5);
-    carouselView.setIndicatorPadding(5);
-    carouselView.setSpacing(55);
-    carouselView.setCarouselOffset(OffsetType.CENTER);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
@@ -50,14 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     carouselView2 = findViewById(R.id.carouselView2);
     carouselView2.setSize(10);
-    carouselView2.setIndicatorAnimationType(IndicatorAnimationType.SWAP);
     carouselView2.setResource(R.layout.item);
-    carouselView2.setIndicatorSelectedColor(Color.parseColor(data[5]));
-    carouselView2.setIndicatorUnselectedColor(Color.parseColor(data[0]));
-    carouselView2.setIndicatorRadius(5);
-    carouselView2.setIndicatorPadding(5);
-    carouselView2.hideIndicator(true);
-//    carouselView2.enableSnapping(false);
+//    carouselView2.hideIndicator(true);
     carouselView2.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
