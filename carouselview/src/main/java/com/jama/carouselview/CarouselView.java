@@ -1,7 +1,9 @@
 package com.jama.carouselview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -36,15 +38,15 @@ public class CarouselView extends FrameLayout {
 
   public CarouselView(@NonNull Context context) {
     super(context);
-    init(context);
+    init(context, null);
   }
 
   public CarouselView(@NonNull Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
-    init(context);
+    init(context, attrs);
   }
 
-  private void init(final Context context) {
+  private void init(final Context context, AttributeSet attributeSet) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     this.carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
@@ -54,8 +56,12 @@ public class CarouselView extends FrameLayout {
     this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
 
-    this.setCarouselOffset(OffsetType.START);
-    this.hideIndicator(false);
+    if (attributeSet != null) {
+      TypedArray attributes = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
+      this.setCarouselOffset(OffsetType.START);
+      this.setSpacing(attributes.getInteger(R.styleable.CarouselView_spacing, 100));
+      this.hideIndicator(false);
+    }
   }
 
   public void enableSnapping(boolean enable) {

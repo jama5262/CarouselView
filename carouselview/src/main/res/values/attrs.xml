@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <declare-styleable name="CarouselView">
+        <attr name="spacing" format="integer" />
+    </declare-styleable>
+
+</resources>

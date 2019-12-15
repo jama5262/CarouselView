@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     carouselView.setIndicatorUnselectedColor(Color.parseColor(data[0]));
     carouselView.setIndicatorRadius(5);
     carouselView.setIndicatorPadding(5);
-    carouselView.setSpacing(55);
+//    carouselView.setSpacing(55);
     carouselView.setCarouselOffset(OffsetType.CENTER);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
