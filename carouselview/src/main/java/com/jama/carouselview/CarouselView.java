@@ -30,7 +30,7 @@ public class CarouselView extends FrameLayout {
   private boolean enableSnapping = true;
   private int resource;
   private int size;
-  private int spacing = 25;
+  private int spacing = 0;
   private boolean isResourceSet = false;
   private boolean isSizeSet = false;
 
