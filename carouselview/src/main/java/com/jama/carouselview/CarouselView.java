@@ -27,16 +27,15 @@ public class CarouselView extends FrameLayout {
   private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
+  private CarouselScrollListener carouselScrollListener;
   private IndicatorAnimationType indicatorAnimationType;
   private OffsetType offsetType;
   private SnapHelper snapHelper;
   private boolean enableSnapping;
   private int resource;
-  private int resourceId;
-  private int indicatorSelectedColorResourceId;
-  private int indicatorUnselectedColorResourceId;
   private int size;
   private int spacing;
+  private int currentItem;
   private boolean isResourceSet = false;
   private boolean isSizeSet = false;
 
@@ -70,17 +69,17 @@ public class CarouselView extends FrameLayout {
       TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
       this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
       this.setCarouselOffset(this.getOffset(attributes.getInteger(R.styleable.CarouselView_carouselOffset, 0)));
-      this.resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
-      if (this.resourceId != 0) {
-        this.setResource(this.resourceId);
+      int resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
+      if (resourceId != 0) {
+        this.setResource(resourceId);
       }
-      this.indicatorSelectedColorResourceId = attributes.getColor(R.styleable.CarouselView_indicatorSelectedColor, 0);
-      this.indicatorUnselectedColorResourceId = attributes.getColor(R.styleable.CarouselView_indicatorUnselectedColor, 0);
-      if (this.indicatorSelectedColorResourceId != 0) {
-        this.setIndicatorSelectedColor(this.indicatorSelectedColorResourceId);
+      int indicatorSelectedColorResourceId = attributes.getColor(R.styleable.CarouselView_indicatorSelectedColor, 0);
+      int indicatorUnselectedColorResourceId = attributes.getColor(R.styleable.CarouselView_indicatorUnselectedColor, 0);
+      if (indicatorSelectedColorResourceId != 0) {
+        this.setIndicatorSelectedColor(indicatorSelectedColorResourceId);
       }
-      if (this.indicatorUnselectedColorResourceId != 0) {
-        this.setIndicatorUnselectedColor(this.indicatorUnselectedColorResourceId);
+      if (indicatorUnselectedColorResourceId != 0) {
+        this.setIndicatorUnselectedColor(indicatorUnselectedColorResourceId);
       }
       this.setIndicatorAnimationType(this.getAnimation(attributes.getInteger(R.styleable.CarouselView_indicatorAnimationType, 0)));
       this.setIndicatorRadius(attributes.getInteger(R.styleable.CarouselView_indicatorRadius, 5));
@@ -90,6 +89,7 @@ public class CarouselView extends FrameLayout {
       attributes.recycle();
     }
   }
+
 
   public void enableSnapping(boolean enable) {
     this.enableSnapping = enable;
@@ -117,17 +117,22 @@ public class CarouselView extends FrameLayout {
       public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
         View centerView = snapHelper.findSnapView(layoutManager);
-        int pos = layoutManager.getPosition(centerView);
-        if (newState == RecyclerView.SCROLL_STATE_IDLE || (pos == 0 && newState == RecyclerView.SCROLL_STATE_DRAGGING)) {
-          pageIndicatorView.setSelection(pos);
-        } else {
-          pageIndicatorView.setSelection(pos);
+        int position = layoutManager.getPosition(centerView);
+        if (carouselScrollListener != null) {
+          carouselScrollListener.onScrollStateChanged(recyclerView, newState, position);
+        }
+        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+          pageIndicatorView.setSelection(position);
+          setCurrentItem(position);
         }
       }
 
       @Override
       public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        if (carouselScrollListener != null) {
+          carouselScrollListener.onScrolled(recyclerView, dx, dy);
+        }
       }
     });
   }
@@ -146,6 +151,21 @@ public class CarouselView extends FrameLayout {
 
   public OffsetType getOffsetType() {
     return this.offsetType;
+  }
+
+  public void setCurrentItem(int item) {
+    if (item < 0) {
+      this.currentItem = 0;
+    } else if (item >= this.getSize()) {
+      this.currentItem = this.getSize() - 1;
+    } else {
+      this.currentItem = item;
+    }
+    this.carouselRecyclerView.smoothScrollToPosition(this.currentItem);
+  }
+
+  public int getCurrentItem() {
+    return this.currentItem;
   }
 
   public void setIndicatorAnimationType(IndicatorAnimationType indicatorAnimationType) {
@@ -252,6 +272,14 @@ public class CarouselView extends FrameLayout {
 
   public CarouselViewListener getCarouselViewListener() {
     return this.carouselViewListener;
+  }
+
+  public void setCarouselScrollListener(CarouselScrollListener carouselScrollListener) {
+    this.carouselScrollListener = carouselScrollListener;
+  }
+
+  public CarouselScrollListener getCarouselScrollListener() {
+    return this.carouselScrollListener;
   }
 
   public void validate() {
