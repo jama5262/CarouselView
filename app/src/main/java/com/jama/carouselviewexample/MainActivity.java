@@ -1,8 +1,9 @@
 package com.jama.carouselviewexample;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,10 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jama.carouselview.CarouselScrollListener;
 import com.jama.carouselview.CarouselView;
 import com.jama.carouselview.CarouselViewListener;
-import com.jama.carouselview.enums.IndicatorAnimationType;
-import com.jama.carouselview.enums.OffsetType;
 
 import java.util.Random;
 

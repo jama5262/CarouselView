@@ -27,6 +27,7 @@ public class CarouselView extends FrameLayout {
   private RecyclerView carouselRecyclerView;
   private RecyclerView.LayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
+  private CarouselScrollListener carouselScrollListener;
   private IndicatorAnimationType indicatorAnimationType;
   private OffsetType offsetType;
   private SnapHelper snapHelper;
@@ -117,6 +118,9 @@ public class CarouselView extends FrameLayout {
         super.onScrollStateChanged(recyclerView, newState);
         View centerView = snapHelper.findSnapView(layoutManager);
         int position = layoutManager.getPosition(centerView);
+        if (carouselScrollListener != null) {
+          carouselScrollListener.onScrollStateChanged(recyclerView, newState, position);
+        }
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
           pageIndicatorView.setSelection(position);
           setCurrentItem(position);
@@ -126,6 +130,9 @@ public class CarouselView extends FrameLayout {
       @Override
       public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        if (carouselScrollListener != null) {
+          carouselScrollListener.onScrolled(recyclerView, dx, dy);
+        }
       }
     });
   }
@@ -265,6 +272,14 @@ public class CarouselView extends FrameLayout {
 
   public CarouselViewListener getCarouselViewListener() {
     return this.carouselViewListener;
+  }
+
+  public void setCarouselScrollListener(CarouselScrollListener carouselScrollListener) {
+    this.carouselScrollListener = carouselScrollListener;
+  }
+
+  public CarouselScrollListener getCarouselScrollListener() {
+    return this.carouselScrollListener;
   }
 
   public void validate() {
