@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         app:carouselOffset="center"
-        app:indicatorSelectedColor="@color/colorPrimary"
-        app:indicatorUnselectedColor="@color/colorAccent"
         app:enableSnapping="true"
         app:indicatorAnimationType="thinWorm"
+        app:indicatorSelectedColor="@color/colorPrimary"
+        app:indicatorUnselectedColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,10 +27,28 @@
         android:id="@+id/carouselView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        app:enableSnapping="false"
+        android:layout_marginTop="70dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carouselView" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Right"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/carouselView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
