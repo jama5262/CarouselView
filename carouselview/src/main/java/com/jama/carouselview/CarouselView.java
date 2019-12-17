@@ -58,7 +58,7 @@ public class CarouselView extends FrameLayout {
     this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
 
     carouselRecyclerView.setHasFixedSize(false);
-    this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+    this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
 
     this.initializeAttributes(attributeSet);
@@ -89,6 +89,7 @@ public class CarouselView extends FrameLayout {
       attributes.recycle();
     }
   }
+
 
 
   public void enableSnapping(boolean enable) {
