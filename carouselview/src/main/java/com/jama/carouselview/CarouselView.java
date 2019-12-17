@@ -25,7 +25,7 @@ public class CarouselView extends FrameLayout {
   private Context context;
   private PageIndicatorView pageIndicatorView;
   private RecyclerView carouselRecyclerView;
-  private RecyclerView.LayoutManager layoutManager;
+  private CarouselLinearLayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
   private CarouselScrollListener carouselScrollListener;
   private IndicatorAnimationType indicatorAnimationType;
@@ -58,9 +58,6 @@ public class CarouselView extends FrameLayout {
     this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
 
     carouselRecyclerView.setHasFixedSize(false);
-    this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-    carouselRecyclerView.setLayoutManager(this.layoutManager);
-
     this.initializeAttributes(attributeSet);
   }
 
@@ -105,6 +102,9 @@ public class CarouselView extends FrameLayout {
   }
 
   private void setAdapter() {
+    this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+    this.layoutManager.isOffsetStart(this.getOffsetType() == OffsetType.START);
+    carouselRecyclerView.setLayoutManager(this.layoutManager);
     this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getOffsetType() == OffsetType.CENTER));
     if (this.enableSnapping) {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);

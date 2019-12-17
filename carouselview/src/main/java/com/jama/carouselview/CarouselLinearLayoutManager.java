@@ -1,8 +1,6 @@
 package com.jama.carouselview;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,13 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CarouselLinearLayoutManager extends LinearLayoutManager {
 
-  // Shrink the cards around the center up to 50%
-  private final float mShrinkAmount = 0.5f;
-  // The cards will be at 50% when they are 75% of the way between the
-  // center and the edge.
-  private final float mShrinkDistance = 0.9f;
+  private boolean isOffsetStart;
 
-  public CarouselLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
+  CarouselLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
     super(context, orientation, reverseLayout);
   }
 
@@ -34,25 +28,36 @@ public class CarouselLinearLayoutManager extends LinearLayoutManager {
 
       for (int i = 0; i < getChildCount(); i++) {
         View child = getChildAt(i);
-        float parentWidth = getWidth();
-        float parentWidthHalf = parentWidth / 2.f;
+
         float childWidth = child.getRight() - child.getLeft();
         float childWidthHalf = childWidth / 2.f;
-        float boundLeft = parentWidthHalf - childWidthHalf;
-        float boundRight = parentWidthHalf + childWidthHalf;
         float childCenter = child.getLeft() + childWidthHalf;
 
-        if (childCenter >= boundLeft && childCenter <= boundRight) {
-          child.setScaleX(1f);
-          child.setScaleY(1f);
-        } else {
-          child.setScaleX(.6f);
-          child.setScaleY(.6f);
-        }
+        float parentWidth = this.isOffsetStart ? childWidth : getWidth();
+        float parentWidthHalf = parentWidth / 2.f;
+
+        float d0 = 0.f;
+        float mShrinkDistance = .75f;
+        float d1 = mShrinkDistance * parentWidthHalf;
+        float s0 = 1.f;
+        float mShrinkAmount = 0.15f;
+        float s1 = 1.f - mShrinkAmount;
+
+        float d = Math.min(d1, Math.abs(parentWidthHalf - childCenter));
+
+        float position = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
+
+        child.setScaleX(position);
+        child.setScaleY(position);
       }
       return scrolled;
     } else {
       return 0;
     }
   }
+
+  void isOffsetStart(boolean isOffsetStart) {
+    this.isOffsetStart = isOffsetStart;
+  }
+
 }

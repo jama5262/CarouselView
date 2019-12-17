@@ -20,8 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:resource="@layout/item"
-        app:size="5"
-        app:spacing="50" />
+        app:size="5" />
 
     <com.jama.carouselview.CarouselView
         android:id="@+id/carouselView2"
