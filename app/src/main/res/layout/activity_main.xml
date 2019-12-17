@@ -20,13 +20,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:resource="@layout/item"
-        app:size="5"
-        app:spacing="50" />
+        app:size="5" />
 
     <com.jama.carouselview.CarouselView
         android:id="@+id/carouselView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:scaleOnScroll="true"
         android:layout_marginTop="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

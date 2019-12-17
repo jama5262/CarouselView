@@ -25,13 +25,14 @@ public class CarouselView extends FrameLayout {
   private Context context;
   private PageIndicatorView pageIndicatorView;
   private RecyclerView carouselRecyclerView;
-  private RecyclerView.LayoutManager layoutManager;
+  private CarouselLinearLayoutManager layoutManager;
   private CarouselViewListener carouselViewListener;
   private CarouselScrollListener carouselScrollListener;
   private IndicatorAnimationType indicatorAnimationType;
   private OffsetType offsetType;
   private SnapHelper snapHelper;
   private boolean enableSnapping;
+  private boolean scaleOnScroll;
   private int resource;
   private int size;
   private int spacing;
@@ -58,9 +59,6 @@ public class CarouselView extends FrameLayout {
     this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
 
     carouselRecyclerView.setHasFixedSize(false);
-    this.layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-    carouselRecyclerView.setLayoutManager(this.layoutManager);
-
     this.initializeAttributes(attributeSet);
   }
 
@@ -68,6 +66,7 @@ public class CarouselView extends FrameLayout {
     if (attributeSet != null) {
       TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
       this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
+      this.setScaleOnScroll(attributes.getBoolean(R.styleable.CarouselView_scaleOnScroll, false));
       this.setCarouselOffset(this.getOffset(attributes.getInteger(R.styleable.CarouselView_carouselOffset, 0)));
       int resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
       if (resourceId != 0) {
@@ -91,6 +90,7 @@ public class CarouselView extends FrameLayout {
   }
 
 
+
   public void enableSnapping(boolean enable) {
     this.enableSnapping = enable;
   }
@@ -104,6 +104,10 @@ public class CarouselView extends FrameLayout {
   }
 
   private void setAdapter() {
+    this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+    this.layoutManager.isOffsetStart(this.getOffsetType() == OffsetType.START);
+    if (this.getScaleOnScroll()) this.layoutManager.setScaleOnScroll(true);
+    carouselRecyclerView.setLayoutManager(this.layoutManager);
     this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getOffsetType() == OffsetType.CENTER));
     if (this.enableSnapping) {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
@@ -237,6 +241,14 @@ public class CarouselView extends FrameLayout {
 
   public int getIndicatorUnselectedColor() {
     return this.pageIndicatorView.getUnselectedColor();
+  }
+
+  public void setScaleOnScroll(boolean scaleOnScroll) {
+    this.scaleOnScroll = scaleOnScroll;
+  }
+
+  public boolean getScaleOnScroll() {
+    return this.scaleOnScroll;
   }
 
   public void setSize(int size) {

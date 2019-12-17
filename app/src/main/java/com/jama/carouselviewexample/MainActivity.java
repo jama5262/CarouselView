@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     right = findViewById(R.id.button2);
 
     carouselView = findViewById(R.id.carouselView);
+    carouselView.setScaleOnScroll(true);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
       public void setItemPosition(View view, final int position) {
