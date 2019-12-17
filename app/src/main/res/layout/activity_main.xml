@@ -26,6 +26,7 @@
         android:id="@+id/carouselView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:scaleOnScroll="true"
         android:layout_marginTop="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

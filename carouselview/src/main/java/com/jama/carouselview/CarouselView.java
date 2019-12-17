@@ -66,6 +66,7 @@ public class CarouselView extends FrameLayout {
     if (attributeSet != null) {
       TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
       this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
+      this.setScaleOnScroll(attributes.getBoolean(R.styleable.CarouselView_scaleOnScroll, false));
       this.setCarouselOffset(this.getOffset(attributes.getInteger(R.styleable.CarouselView_carouselOffset, 0)));
       int resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
       if (resourceId != 0) {
