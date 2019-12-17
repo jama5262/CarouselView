@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CarouselLinearLayoutManager extends LinearLayoutManager {
 
   private boolean isOffsetStart;
+  private boolean scaleOnScroll = false;
 
   CarouselLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
     super(context, orientation, reverseLayout);
@@ -22,9 +23,8 @@ public class CarouselLinearLayoutManager extends LinearLayoutManager {
 
   @Override
   public int scrollHorizontallyBy(int dx, RecyclerView.Recycler recycler, RecyclerView.State state) {
-    int orientation = getOrientation();
-    if (orientation == HORIZONTAL) {
-      int scrolled = super.scrollHorizontallyBy(dx, recycler, state);
+    int scrolled = super.scrollHorizontallyBy(dx, recycler, state);
+    if (this.scaleOnScroll) {
 
       for (int i = 0; i < getChildCount(); i++) {
         View child = getChildAt(i);
@@ -52,12 +52,16 @@ public class CarouselLinearLayoutManager extends LinearLayoutManager {
       }
       return scrolled;
     } else {
-      return 0;
+      return scrolled;
     }
   }
 
   void isOffsetStart(boolean isOffsetStart) {
     this.isOffsetStart = isOffsetStart;
+  }
+
+  void setScaleOnScroll(boolean scaleOnScroll) {
+    this.scaleOnScroll = scaleOnScroll;
   }
 
 }
