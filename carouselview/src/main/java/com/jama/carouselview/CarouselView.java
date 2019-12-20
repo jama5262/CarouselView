@@ -38,7 +38,6 @@ public class CarouselView extends FrameLayout {
   private int spacing;
   private int currentItem;
   private boolean isResourceSet = false;
-  private boolean isSizeSet = false;
 
   public CarouselView(@NonNull Context context) {
     super(context);
@@ -88,8 +87,6 @@ public class CarouselView extends FrameLayout {
       attributes.recycle();
     }
   }
-
-
 
   public void enableSnapping(boolean enable) {
     this.enableSnapping = enable;
@@ -254,7 +251,6 @@ public class CarouselView extends FrameLayout {
   public void setSize(int size) {
     this.size = size;
     this.pageIndicatorView.setCount(size);
-    this.isSizeSet = true;
   }
 
   public int getSize() {
@@ -295,9 +291,7 @@ public class CarouselView extends FrameLayout {
   }
 
   public void validate() {
-    if (this.carouselViewListener == null) throw new RuntimeException("A carouselviewlistener is need");
-    else if (!this.isResourceSet) throw new RuntimeException("A resource to a view is needed");
-    else if (!this.isSizeSet) throw new RuntimeException("A size is needed");
+    if (!this.isResourceSet) throw new RuntimeException("Please add a resource layout to populate the carouselview");
   }
 
   private IndicatorAnimationType getAnimation(int value) {

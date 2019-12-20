@@ -36,7 +36,9 @@ public class CarouselViewAdapter extends RecyclerView.Adapter<CarouselViewAdapte
 
   @Override
   public void onBindViewHolder(@NonNull CarouselAdapterViewHolder holder, int position) {
-    this.carouselViewListener.onBindView(holder.itemView, position);
+    if (this.carouselViewListener != null) {
+      this.carouselViewListener.onBindView(holder.itemView, position);
+    }
     this.carouselOffset.init(recyclerView, holder.itemView, this.spacing, this.isOffsetStart);
   }
 

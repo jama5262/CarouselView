@@ -36,15 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     carouselView = findViewById(R.id.carouselView);
     carouselView.setScaleOnScroll(true);
-    carouselView.setCarouselViewListener(new CarouselViewListener() {
-      @Override
-      public void onBindView(View view, final int position) {
-        final CardView cardView = view.findViewById(R.id.cardView);
-        TextView textView = view.findViewById(R.id.textView);
-        cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
-        textView.setText((position + 1 + ""));
-      }
-    });
     left.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
