@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".examples.StartCarouselActivity"></activity>
-        <activity android:name=".examples.CenteredCarouselActivity" />
-        <activity android:name=".examples.ImageCarouselActivity" />
+        <activity android:name=".examples.StartCarouselActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".examples.CenteredCarouselActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".examples.ImageCarouselActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
