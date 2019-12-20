@@ -4,6 +4,6 @@ import android.view.View;
 
 public interface CarouselViewListener {
 
-  void setItemPosition(View view, int position);
+  void onBindView(View view, int position);
 
 }

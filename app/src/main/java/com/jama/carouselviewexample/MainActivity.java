@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     carouselView.setScaleOnScroll(true);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
       @Override
-      public void setItemPosition(View view, final int position) {
+      public void onBindView(View view, final int position) {
         final CardView cardView = view.findViewById(R.id.cardView);
         TextView textView = view.findViewById(R.id.textView);
         cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     carouselView2.setResource(R.layout.item);
     carouselView2.setCarouselViewListener(new CarouselViewListener() {
       @Override
-      public void setItemPosition(View view, final int position) {
+      public void onBindView(View view, final int position) {
         CardView cardView = view.findViewById(R.id.cardView);
         TextView textView = view.findViewById(R.id.textView);
         cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
