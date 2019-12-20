@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     carouselView2 = findViewById(R.id.carouselView2);
     carouselView2.setSize(10);
+    carouselView2.setScaleOnScroll(true);
     carouselView2.setResource(R.layout.item);
     carouselView2.setCarouselViewListener(new CarouselViewListener() {
       @Override
