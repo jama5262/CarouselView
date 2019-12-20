@@ -101,10 +101,10 @@ public class CarouselView extends FrameLayout {
 
   private void setAdapter() {
     this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-    this.layoutManager.isOffsetStart(this.getOffsetType() == OffsetType.START);
+    this.layoutManager.isOffsetStart(this.getCarouselOffset() == OffsetType.START);
     if (this.getScaleOnScroll()) this.layoutManager.setScaleOnScroll(true);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
-    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getOffsetType() == OffsetType.CENTER));
+    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getCarouselOffset() == OffsetType.CENTER));
     if (this.enableSnapping) {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
     }
@@ -149,7 +149,7 @@ public class CarouselView extends FrameLayout {
     }
   }
 
-  public OffsetType getOffsetType() {
+  public OffsetType getCarouselOffset() {
     return this.offsetType;
   }
 
