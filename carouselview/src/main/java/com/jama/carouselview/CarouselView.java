@@ -289,7 +289,7 @@ public class CarouselView extends FrameLayout {
     return this.carouselScrollListener;
   }
 
-  public void validate() {
+  private void validate() {
     if (!this.isResourceSet) throw new RuntimeException("Please add a resource layout to populate the carouselview");
   }
 

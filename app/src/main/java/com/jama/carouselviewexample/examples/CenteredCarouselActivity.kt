@@ -19,7 +19,7 @@ class CenteredCarouselActivity : AppCompatActivity() {
         carouselView.apply {
             size = images.size
             resource = R.layout.center_carousel_item
-            indicatorAnimationType = IndicatorAnimationType.DROP
+            indicatorAnimationType = IndicatorAnimationType.THIN_WORM
             carouselOffset = OffsetType.CENTER
             setCarouselViewListener { view, position ->
                 val imageView = view.findViewById<ImageView>(R.id.imageView)
