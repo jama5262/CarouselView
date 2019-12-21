@@ -3,7 +3,6 @@ package com.jama.carouselview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -38,7 +37,6 @@ public class CarouselView extends FrameLayout {
   private int spacing;
   private int currentItem;
   private boolean isResourceSet = false;
-  private boolean isSizeSet = false;
 
   public CarouselView(@NonNull Context context) {
     super(context);
@@ -89,8 +87,6 @@ public class CarouselView extends FrameLayout {
     }
   }
 
-
-
   public void enableSnapping(boolean enable) {
     this.enableSnapping = enable;
   }
@@ -105,10 +101,10 @@ public class CarouselView extends FrameLayout {
 
   private void setAdapter() {
     this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-    this.layoutManager.isOffsetStart(this.getOffsetType() == OffsetType.START);
+    this.layoutManager.isOffsetStart(this.getCarouselOffset() == OffsetType.START);
     if (this.getScaleOnScroll()) this.layoutManager.setScaleOnScroll(true);
     carouselRecyclerView.setLayoutManager(this.layoutManager);
-    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getOffsetType() == OffsetType.CENTER));
+    this.carouselRecyclerView.setAdapter(new CarouselViewAdapter(getCarouselViewListener(), getResource(), getSize(), carouselRecyclerView, this.getSpacing(), this.getCarouselOffset() == OffsetType.CENTER));
     if (this.enableSnapping) {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
     }
@@ -153,7 +149,7 @@ public class CarouselView extends FrameLayout {
     }
   }
 
-  public OffsetType getOffsetType() {
+  public OffsetType getCarouselOffset() {
     return this.offsetType;
   }
 
@@ -254,7 +250,6 @@ public class CarouselView extends FrameLayout {
   public void setSize(int size) {
     this.size = size;
     this.pageIndicatorView.setCount(size);
-    this.isSizeSet = true;
   }
 
   public int getSize() {
@@ -294,10 +289,8 @@ public class CarouselView extends FrameLayout {
     return this.carouselScrollListener;
   }
 
-  public void validate() {
-    if (this.carouselViewListener == null) throw new RuntimeException("A carouselviewlistener is need");
-    else if (!this.isResourceSet) throw new RuntimeException("A resource to a view is needed");
-    else if (!this.isSizeSet) throw new RuntimeException("A size is needed");
+  private void validate() {
+    if (!this.isResourceSet) throw new RuntimeException("Please add a resource layout to populate the carouselview");
   }
 
   private IndicatorAnimationType getAnimation(int value) {

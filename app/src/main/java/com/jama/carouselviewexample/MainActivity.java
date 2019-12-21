@@ -2,76 +2,87 @@ package com.jama.carouselviewexample;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jama.carouselview.CarouselScrollListener;
-import com.jama.carouselview.CarouselView;
-import com.jama.carouselview.CarouselViewListener;
+import com.jama.carouselviewexample.examples.CenteredCarouselActivity;
+import com.jama.carouselviewexample.examples.ImageCarouselActivity;
+import com.jama.carouselviewexample.examples.StartCarouselActivity;
 
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-  CarouselView carouselView;
-  CarouselView carouselView2;
-  Button left;
-  Button right;
-  String[] data = {"#EF5350", "#EC407A", "#AB47BC", "#4CAF50", "#FFA726", "#78909C", "#FFA726"};
+  RecyclerView recyclerView;
+  private RecyclerView.Adapter mAdapter;
+  private RecyclerView.LayoutManager layoutManager;
+
+
+  private String[] examples = {"Image Carousel Example", "Centered Carousel Example", "Start Carousel Example"};
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    left = findViewById(R.id.button);
-    right = findViewById(R.id.button2);
+    recyclerView = findViewById(R.id.recyclerView);
+    recyclerView.setHasFixedSize(true);
+    layoutManager = new LinearLayoutManager(this);
+    recyclerView.setLayoutManager(layoutManager);
+    mAdapter = new Adapter(examples);
+    recyclerView.setAdapter(mAdapter);
 
-    carouselView = findViewById(R.id.carouselView);
-    carouselView.setScaleOnScroll(true);
-    carouselView.setCarouselViewListener(new CarouselViewListener() {
-      @Override
-      public void onBindView(View view, final int position) {
-        final CardView cardView = view.findViewById(R.id.cardView);
-        TextView textView = view.findViewById(R.id.textView);
-        cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
-        textView.setText((position + 1 + ""));
-      }
-    });
-    left.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        carouselView2.setCurrentItem(carouselView2.getCurrentItem() - 1);
-      }
-    });
-    right.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        carouselView2.setCurrentItem(carouselView2.getCurrentItem() + 1);
-      }
-    });
-    carouselView.show();
 
-    carouselView2 = findViewById(R.id.carouselView2);
-    carouselView2.setSize(10);
-    carouselView2.setScaleOnScroll(true);
-    carouselView2.setResource(R.layout.item);
-    carouselView2.setCarouselViewListener(new CarouselViewListener() {
-      @Override
-      public void onBindView(View view, final int position) {
-        CardView cardView = view.findViewById(R.id.cardView);
-        TextView textView = view.findViewById(R.id.textView);
-        cardView.setCardBackgroundColor(Color.parseColor(data[new Random().nextInt(7)]));
-        textView.setText((position + 1 + ""));
+  }
+
+  class Adapter extends RecyclerView.Adapter<Adapter.AdapterViewHolder> {
+
+    private String[] mDataset;
+
+    Adapter(String[] mDataset) {
+      this.mDataset = mDataset;
+    }
+
+    @NonNull
+    @Override
+    public AdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+      View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.examples_items, parent, false);
+      return new AdapterViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull AdapterViewHolder holder, final int position) {
+      TextView textView = holder.itemView.findViewById(R.id.textViewExamples);
+      textView.setText(mDataset[position]);
+      textView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          if (position == 0) {
+            startActivity(new Intent(MainActivity.this, ImageCarouselActivity.class));
+          } else if (position == 1) {
+            startActivity(new Intent(MainActivity.this, CenteredCarouselActivity.class));
+          } else if (position == 2) {
+            startActivity(new Intent(MainActivity.this, StartCarouselActivity.class));
+          }
+        }
+      });
+    }
+
+    @Override
+    public int getItemCount() {
+      return mDataset.length;
+    }
+
+    class AdapterViewHolder extends RecyclerView.ViewHolder {
+      AdapterViewHolder(@NonNull View itemView) {
+        super(itemView);
       }
-    });
-    carouselView2.show();
+    }
   }
 }
