@@ -142,3 +142,58 @@ class CenteredCarouselActivity extends AppCompatActivity {
   }
 }
 ```
+
+Below are all the methods available
+
+| Name | Description | Values | Default | Is XML Attribute |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| show | Show the carousel |  |  | No |
+| enableSnapping | Enables and disables snapping | true, false | true | Yes |
+| hideIndicator | Show and hide indicator | true, false | false | No |
+| setCarouselOffset | Sets the carousel item to display center or from start | OffsetType.CENTER, OffsetType.START | OffsetType.START | Yes |
+| setCurrentItem |This sets the item position | Takes item position |  | No |
+| setIndicatorAnimationType | Sets the indicator animation type. This is thanks to [romandanylyk](https://github.com/romandanylyk/PageIndicatorView) | AnimationType.DROP, FILL, NONE, SWAP, WORM, COLOR, SCALE, SLIDE, THIN_WORM, SCALE_DOWN | AnimationType.NONE | Yes |
+| setIndicatorRadius | Sets the radius of the indicator | Takes in radius integer |  | Yes |
+| setIndicatorPadding | Sets the padding of the indicator | Takes in padding integer|  | Yes |
+| setIndicatorSelectedColor | Sets the color of the selected indicator | Takes in color type | Set to black | Yes |
+| setIndicatorUnselectedColor | Sets the color of the unselected indicator | Takes in color type | Set to grey | Yes |
+| setScaleOnScroll | Sets the carousel item to scale on scroll | true, false | false | Yes |
+| setSize | Sets the number of items to display in the carousel | Takes in size integer |  | Yes |
+| setSpacing | Sets the spacing between items | Takes in spacing integer | 0 | Yes |
+| setResource | Sets the item to be displayed in the carousel | Takes in a layout item |  | Yes |
+| setCarouselViewListener | Adding custom view |  |  | No |
+| setCarouselScrollListener | Listens for scrolls |  |  | No |
+
+## Support
+
+Reach out to me at one of the following places!
+
+- Email at jama3137@gmail.com
+- Twitter [timedjama5262](https://twitter.com/timedjama5262)
+
+## License
+
+```
+MIT License
+
+Copyright (c) 2019 Jama Mohamed
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
