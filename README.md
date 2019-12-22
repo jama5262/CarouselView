@@ -1,6 +1,7 @@
 # CarouselView
 
 [![](https://jitpack.io/v/jama5262/CarouselView.svg)](https://jitpack.io/#jama5262/CarouselView)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An android carousel library for RecyclerView
 
