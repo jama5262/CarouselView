@@ -1,6 +1,6 @@
 # CarouselView
 
-[![Library Version](https://img.shields.io/badge/Library-v1.0.0-blue)](https://pub.dev/packages/jiffy)
+[![Library Version](https://img.shields.io/badge/Library-v1.0.0-blue)]()
 
 An android carousel library for RecyclerView
 
@@ -10,11 +10,11 @@ An android carousel library for RecyclerView
 
 Full Image | Item Centered | Item Start
 ------------ | ------------- | -------------
-<img src="https://github.com/jama5262/CarouselView/blob/develop/app/src/main/res/drawable/image1.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/CarouselView/blob/develop/app/src/main/res/drawable/image2.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/CarouselView/blob/develop/app/src/main/res/drawable/image3.gif" height="500px">
+<img src="https://github.com/jama5262/CarouselView/blob/master/app/src/main/res/drawable/image1.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/CarouselView/blob/master/app/src/main/res/drawable/image2.gif" alt="alt text" height="500px"> | <img src="https://github.com/jama5262/CarouselView/blob/master/app/src/main/res/drawable/image3.gif" height="500px">
 
 ## Installation
 
-Current Version: [![Library Version](https://img.shields.io/badge/Library-v1.0.0-blue)](https://pub.dev/packages/jiffy)
+Current Version: [![Library Version](https://img.shields.io/badge/Library-v1.0.0-blue)]()
 
 #### Gradle
 
