@@ -32,7 +32,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.jama5262:CarouselView:v1.0.0'
+    implementation 'com.github.jama5262:CarouselView:1.0.0'
 }
 ```
 
@@ -51,7 +51,7 @@ dependencies {
 <dependency>
     <groupId>com.github.jama5262</groupId>
 	<artifactId>CarouselView</artifactId>
-    <version>v1.0.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
