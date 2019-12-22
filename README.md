@@ -1,10 +1,10 @@
 # CarouselView
 
-[![Library Version](https://img.shields.io/badge/Library-v1.0.0-blue)]()
+[![](https://jitpack.io/v/jama5262/CarouselView.svg)](https://jitpack.io/#jama5262/CarouselView)
 
 An android carousel library for RecyclerView
 
-#### [ChangeLog]() | [Examples]()
+#### [Examples](https://github.com/jama5262/CarouselView/tree/master/app/src/main/java/com/jama/carouselviewexample/examples)
 
 ## Demos
 
@@ -14,7 +14,7 @@ Full Image | Item Centered | Item Start
 
 ## Installation
 
-Current Version: [![Library Version](https://img.shields.io/badge/Library-v1.0.0-blue)]()
+Current Version: [![](https://jitpack.io/v/jama5262/CarouselView.svg)](https://jitpack.io/#jama5262/CarouselView)
 
 #### Gradle
 
@@ -31,7 +31,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.User:Repo:Tag'
+    implementation 'com.github.jama5262:CarouselView:v1.0.0'
 }
 ```
 
@@ -48,9 +48,9 @@ dependencies {
 
 ```
 <dependency>
-    <groupId>com.github.User</groupId>
-    <artifactId>Repo</artifactId>
-    <version>Tag</version>
+    <groupId>com.github.jama5262</groupId>
+	<artifactId>CarouselView</artifactId>
+    <version>v1.0.0</version>
 </dependency>
 ```
 
