@@ -5,6 +5,8 @@
 
         <attr name="enableSnapping" format="boolean" />
         <attr name="scaleOnScroll" format="boolean" />
+        <attr name="setAutoPlay" format="boolean" />
+        <attr name="setAutoPlayDelay" format="integer" />
         <attr name="carouselOffset" format="enum">
             <enum name="start" value="0"/>
             <enum name="center" value="1"/>

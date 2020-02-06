@@ -18,6 +18,8 @@ class CenteredCarouselActivity : AppCompatActivity() {
 
         carouselView.apply {
             size = images.size
+            autoPlay = true
+            autoPlayDelay = 3000
             resource = R.layout.center_carousel_item
             indicatorAnimationType = IndicatorAnimationType.THIN_WORM
             carouselOffset = OffsetType.CENTER

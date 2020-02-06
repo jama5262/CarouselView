@@ -32,7 +32,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.jama5262:CarouselView:1.0.0'
+    implementation 'com.github.jama5262:CarouselView:1.1.0'
 }
 ```
 
@@ -51,7 +51,7 @@ dependencies {
 <dependency>
     <groupId>com.github.jama5262</groupId>
 	<artifactId>CarouselView</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -69,6 +69,8 @@ Below is all the XML attributes that the CarouselView has
     android:layout_height="wrap_content"
     app:enableSnapping="true"
     app:scaleOnScroll="false"
+    app:setAutoPlay="true"
+    app:setAutoPlayDelay="3000"
     app:carouselOffset="center"
     app:indicatorAnimationType="drop"
     app:indicatorRadius="5"
@@ -97,6 +99,7 @@ class CarouselActivity : AppCompatActivity() {
         carouselView.apply {
             size = images.size
             resource = R.layout.carousel_item
+            autoPlay = true
             indicatorAnimationType = IndicatorAnimationType.THIN_WORM
             carouselOffset = OffsetType.CENTER
             setCarouselViewListener { view, position ->
@@ -128,6 +131,7 @@ class CenteredCarouselActivity extends AppCompatActivity {
     
     carouselView.setSize(images.length);
     carouselView.setResource(R.layout.center_carousel_item);
+    carouselView.setAutoPlay(true);
     carouselView.setIndicatorAnimationType(IndicatorAnimationType.THIN_WORM);
     carouselView.setCarouselOffset(OffsetType.CENTER);
     carouselView.setCarouselViewListener(new CarouselViewListener() {
@@ -151,6 +155,8 @@ Below are all the methods available
 | show | Show the carousel |  |  | No |
 | enableSnapping | Enables and disables snapping | true, false | true | Yes |
 | hideIndicator | Show and hide indicator | true, false | false | No |
+| setAutoPlay | Enable auto play | true, false | false | Yes |
+| setAutoPlayDelay | Set delay time for auto play | Takes in integers | 2500 (2.5 sec) | Yes |
 | setCarouselOffset | Sets the carousel item to display center or from start | OffsetType.CENTER, OffsetType.START | OffsetType.START | Yes |
 | setCurrentItem |This sets the item position | Takes item position |  | No |
 | setIndicatorAnimationType | Sets the indicator animation type. This is thanks to [romandanylyk](https://github.com/romandanylyk/PageIndicatorView) | AnimationType.DROP, FILL, NONE, SWAP, WORM, COLOR, SCALE, SLIDE, THIN_WORM, SCALE_DOWN | AnimationType.NONE | Yes |
