@@ -33,8 +33,8 @@ public class CarouselView extends FrameLayout {
   private OffsetType offsetType;
   private SnapHelper snapHelper;
   private boolean enableSnapping;
-  private boolean enableAutoPlay = false;
-  private int autoPlayDelay = 2000;
+  private boolean enableAutoPlay;
+  private int autoPlayDelay;
   private Handler autoPlayHandler;
   private boolean scaleOnScroll;
   private int resource;
@@ -71,6 +71,8 @@ public class CarouselView extends FrameLayout {
       TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
       this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
       this.setScaleOnScroll(attributes.getBoolean(R.styleable.CarouselView_scaleOnScroll, false));
+      this.setAutoPlay(attributes.getBoolean(R.styleable.CarouselView_setAutoPlay, false));
+      this.setAutoPlayDelay(attributes.getInteger(R.styleable.CarouselView_setAutoPlayDelay, 2500));
       this.setCarouselOffset(this.getOffset(attributes.getInteger(R.styleable.CarouselView_carouselOffset, 0)));
       int resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
       if (resourceId != 0) {
@@ -170,7 +172,11 @@ public class CarouselView extends FrameLayout {
     autoPlayHandler.postDelayed(new Runnable() {
       public void run() {
         if (getAutoPlay()) {
-          Log.e("jjj", "running");
+          if (getSize() - 1 == getCurrentItem()) {
+            setCurrentItem(0);
+          } else {
+            setCurrentItem(getCurrentItem() + 1);
+          }
           autoPlayHandler.postDelayed(this, getAutoPlayDelay());
         }
       }
