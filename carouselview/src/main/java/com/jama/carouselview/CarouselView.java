@@ -2,7 +2,9 @@ package com.jama.carouselview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -31,6 +33,9 @@ public class CarouselView extends FrameLayout {
   private OffsetType offsetType;
   private SnapHelper snapHelper;
   private boolean enableSnapping;
+  private boolean enableAutoPlay;
+  private int autoPlayDelay;
+  private Handler autoPlayHandler;
   private boolean scaleOnScroll;
   private int resource;
   private int size;
@@ -55,6 +60,7 @@ public class CarouselView extends FrameLayout {
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     this.carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
     this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
+    this.autoPlayHandler = new Handler();
 
     carouselRecyclerView.setHasFixedSize(false);
     this.initializeAttributes(attributeSet);
@@ -65,6 +71,8 @@ public class CarouselView extends FrameLayout {
       TypedArray attributes = this.context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.CarouselView, 0, 0);
       this.enableSnapping(attributes.getBoolean(R.styleable.CarouselView_enableSnapping, true));
       this.setScaleOnScroll(attributes.getBoolean(R.styleable.CarouselView_scaleOnScroll, false));
+      this.setAutoPlay(attributes.getBoolean(R.styleable.CarouselView_setAutoPlay, false));
+      this.setAutoPlayDelay(attributes.getInteger(R.styleable.CarouselView_setAutoPlayDelay, 2500));
       this.setCarouselOffset(this.getOffset(attributes.getInteger(R.styleable.CarouselView_carouselOffset, 0)));
       int resourceId = attributes.getResourceId(R.styleable.CarouselView_resource, 0);
       if (resourceId != 0) {
@@ -99,6 +107,12 @@ public class CarouselView extends FrameLayout {
     }
   }
 
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    this.setAutoPlay(false);
+  }
+
   private void setAdapter() {
     this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     this.layoutManager.isOffsetStart(this.getCarouselOffset() == OffsetType.START);
@@ -109,6 +123,7 @@ public class CarouselView extends FrameLayout {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
     }
     this.setScrollListener();
+    this.enableAutoPlay();
   }
 
   private void setScrollListener() {
@@ -135,6 +150,37 @@ public class CarouselView extends FrameLayout {
         }
       }
     });
+  }
+
+  public void setAutoPlay(boolean enableAutoPlay) {
+    this.enableAutoPlay = enableAutoPlay;
+  }
+
+  public boolean getAutoPlay() {
+    return this.enableAutoPlay;
+  }
+
+  public void setAutoPlayDelay(int autoPlayDelay) {
+    this.autoPlayDelay = autoPlayDelay;
+  }
+
+  public int getAutoPlayDelay() {
+    return this.autoPlayDelay;
+  }
+
+  private void enableAutoPlay() {
+    autoPlayHandler.postDelayed(new Runnable() {
+      public void run() {
+        if (getAutoPlay()) {
+          if (getSize() - 1 == getCurrentItem()) {
+            setCurrentItem(0);
+          } else {
+            setCurrentItem(getCurrentItem() + 1);
+          }
+          autoPlayHandler.postDelayed(this, getAutoPlayDelay());
+        }
+      }
+    }, getAutoPlayDelay());
   }
 
   public void setCarouselOffset(OffsetType offsetType) {
