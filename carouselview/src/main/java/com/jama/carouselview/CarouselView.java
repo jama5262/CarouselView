@@ -31,6 +31,7 @@ public class CarouselView extends FrameLayout {
   private OffsetType offsetType;
   private SnapHelper snapHelper;
   private boolean enableSnapping;
+  private boolean enableAutoPlay = false;
   private boolean scaleOnScroll;
   private int resource;
   private int size;
@@ -135,6 +136,18 @@ public class CarouselView extends FrameLayout {
         }
       }
     });
+  }
+
+  public void setAutoPlay(boolean enableAutoPlay) {
+    this.enableAutoPlay = enableAutoPlay;
+  }
+
+  public boolean getAutoPlay() {
+    return this.enableAutoPlay;
+  }
+
+  private void enableAutoPlay() {
+
   }
 
   public void setCarouselOffset(OffsetType offsetType) {
