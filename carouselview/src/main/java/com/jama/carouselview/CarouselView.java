@@ -2,7 +2,9 @@ package com.jama.carouselview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,6 +34,8 @@ public class CarouselView extends FrameLayout {
   private SnapHelper snapHelper;
   private boolean enableSnapping;
   private boolean enableAutoPlay = false;
+  private int autoPlayDelay = 2000;
+  private Handler autoPlayHandler;
   private boolean scaleOnScroll;
   private int resource;
   private int size;
@@ -56,6 +60,7 @@ public class CarouselView extends FrameLayout {
     View carouselView = inflater.inflate(R.layout.view_carousel, this);
     this.carouselRecyclerView = carouselView.findViewById(R.id.carouselRecyclerView);
     this.pageIndicatorView = carouselView.findViewById(R.id.pageIndicatorView);
+    this.autoPlayHandler = new Handler();
 
     carouselRecyclerView.setHasFixedSize(false);
     this.initializeAttributes(attributeSet);
@@ -100,6 +105,12 @@ public class CarouselView extends FrameLayout {
     }
   }
 
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    this.setAutoPlay(false);
+  }
+
   private void setAdapter() {
     this.layoutManager = new CarouselLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
     this.layoutManager.isOffsetStart(this.getCarouselOffset() == OffsetType.START);
@@ -110,6 +121,7 @@ public class CarouselView extends FrameLayout {
       this.snapHelper.attachToRecyclerView(this.carouselRecyclerView);
     }
     this.setScrollListener();
+    this.enableAutoPlay();
   }
 
   private void setScrollListener() {
@@ -146,8 +158,23 @@ public class CarouselView extends FrameLayout {
     return this.enableAutoPlay;
   }
 
-  private void enableAutoPlay() {
+  public void setAutoPlayDelay(int autoPlayDelay) {
+    this.autoPlayDelay = autoPlayDelay;
+  }
 
+  public int getAutoPlayDelay() {
+    return this.autoPlayDelay;
+  }
+
+  private void enableAutoPlay() {
+    autoPlayHandler.postDelayed(new Runnable() {
+      public void run() {
+        if (getAutoPlay()) {
+          Log.e("jjj", "running");
+          autoPlayHandler.postDelayed(this, getAutoPlayDelay());
+        }
+      }
+    }, getAutoPlayDelay());
   }
 
   public void setCarouselOffset(OffsetType offsetType) {
