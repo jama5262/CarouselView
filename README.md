@@ -32,27 +32,8 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.jama5262:CarouselView:1.2.0'
+    implementation 'com.github.jama5262:CarouselView:1.2.2'
 }
-```
-
-#### Maven
-
-```
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-```
-
-```
-<dependency>
-    <groupId>com.github.jama5262</groupId>
-	<artifactId>CarouselView</artifactId>
-    <version>1.2.0</version>
-</dependency>
 ```
 
 Great the project has been setup 👍
